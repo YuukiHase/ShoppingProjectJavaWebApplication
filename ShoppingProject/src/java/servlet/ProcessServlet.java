@@ -23,6 +23,9 @@ public class ProcessServlet extends HttpServlet {
     private final String loginPage = "login.html";
     private final String loginServlet = "LoginServlet";
     private final String signUpServlet = "SignUpServlet";
+    private final String signUpAdminServlet = "SignUpAdminServlet";
+    private final String deactiveAdminServlet = "DeactiveAdminServlet";
+    private final String activeAdminServlet = "ActiveAdminServlet";
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,6 +50,12 @@ public class ProcessServlet extends HttpServlet {
                 url = loginServlet;
             } else if (action.equals("Sign Up")) {
                 url = signUpServlet;
+            } else if (action.equals("Sign Up Admin")) {
+                url = signUpAdminServlet;
+            } else if (action.equals("Deactive Admin")) {
+                url = deactiveAdminServlet;
+            } else if (action.equals("Active Admin")) {
+                url = activeAdminServlet;
             }
             
             RequestDispatcher rd = request.getRequestDispatcher(url);

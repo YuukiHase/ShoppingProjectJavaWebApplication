@@ -8,25 +8,21 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import javax.naming.NamingException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import users.dao.UsersDAO;
 import users.dto.UsersDTO;
-import utils.CheckMD5;
 
 /**
  *
  * @author tabal
  */
-public class LoginServlet extends HttpServlet {
-
-    private final String invalidPage = "invalid.html";
-    private final String loadAdminServlet = "LoadAdminServlet";
+public class LoadAdminServlet extends HttpServlet {
+    private final String adminPage = "admin.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,29 +37,20 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession();
+                
         try {
-            String email = request.getParameter("txtEmail");
-            String password = request.getParameter("txtPassword");
-            String url = invalidPage;
-
             UsersDAO dao = new UsersDAO();
-            String md5Password = CheckMD5.getMD5(password);
-            UsersDTO dto = dao.checkLogin(email, md5Password);
-
-            if (dto != null) {
-                if (dto.getRole() == 1) {
-                    url = loadAdminServlet;
-                    session.setAttribute("USERNAME", dto.getName());
-                }
-            }
-
-            RequestDispatcher rd = request.getRequestDispatcher(url);
+            dao.loadListAdmin();
+            List<UsersDTO> listAdmin = dao.getListAdmin();
+            request.setAttribute("LISTADMIN", listAdmin);
+            
+            RequestDispatcher rd = request.getRequestDispatcher(adminPage);
             rd.forward(request, response);
+            
         } catch (SQLException e) {
-            log("LoginServlet_SQL " + e.getMessage());
+            log("LoadAdminServlet_SQL " + e.getMessage());
         } catch (ClassNotFoundException e) {
-            log("LoginServlet_CNF " + e.getMessage());
+            log("LoadAdminServlet_CNF " + e.getMessage());
         } finally {
             out.close();
         }

@@ -16,14 +16,16 @@ public class UsersDTO implements Serializable{
     private String email;
     private String password;
     private int role;
+    private boolean isDeleted;
 
     public UsersDTO() {}
 
-    public UsersDTO(String name, String email, String password, int role) {
+    public UsersDTO(String name, String email, String password, int role, boolean isDeleted) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.isDeleted = isDeleted;
     }
 
     /**
@@ -81,5 +83,20 @@ public class UsersDTO implements Serializable{
     public void setRole(int role) {
         this.role = role;
     }
+
+    /**
+     * @return the isDeleted
+     */
+    public boolean isIsDeleted() {
+        return isDeleted;
+    }
+
+    /**
+     * @param isDeleted the isDeleted to set
+     */
+    public void setIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+    
     
 }

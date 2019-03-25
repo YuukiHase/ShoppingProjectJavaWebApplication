@@ -12,6 +12,22 @@
         <servlet-name>SignUpServlet</servlet-name>
         <servlet-class>servlet.SignUpServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadAdminServlet</servlet-name>
+        <servlet-class>servlet.LoadAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SignUpAdminServlet</servlet-name>
+        <servlet-class>servlet.SignUpAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeactiveAdminServlet</servlet-name>
+        <servlet-class>servlet.DeactiveAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActiveAdminServlet</servlet-name>
+        <servlet-class>servlet.ActiveAdminServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessServlet</servlet-name>
         <url-pattern>/ProcessServlet</url-pattern>
@@ -23,6 +39,22 @@
     <servlet-mapping>
         <servlet-name>SignUpServlet</servlet-name>
         <url-pattern>/SignUpServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadAdminServlet</servlet-name>
+        <url-pattern>/LoadAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignUpAdminServlet</servlet-name>
+        <url-pattern>/SignUpAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeactiveAdminServlet</servlet-name>
+        <url-pattern>/DeactiveAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActiveAdminServlet</servlet-name>
+        <url-pattern>/ActiveAdminServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,27 +5,25 @@
  */
 package servlet;
 
+import errors.RegistrationErrors;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import users.dao.UsersDAO;
-import users.dto.UsersDTO;
 import utils.CheckMD5;
 
 /**
  *
  * @author tabal
  */
-public class LoginServlet extends HttpServlet {
+public class SignUpAdminServlet extends HttpServlet {
 
-    private final String invalidPage = "invalid.html";
+    private final String signUpError = "create-new-admin.jsp";
     private final String loadAdminServlet = "LoadAdminServlet";
 
     /**
@@ -41,29 +39,56 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession();
+        RegistrationErrors errors = new RegistrationErrors();
+        String name = request.getParameter("txtUserName");
+        String email = request.getParameter("txtEmail");
+        String password = request.getParameter("txtPassword");
+        String retypePassword = request.getParameter("txtRetypePassword");
+
+        String url = signUpError;
         try {
-            String email = request.getParameter("txtEmail");
-            String password = request.getParameter("txtPassword");
-            String url = invalidPage;
+            boolean error = false;
 
-            UsersDAO dao = new UsersDAO();
-            String md5Password = CheckMD5.getMD5(password);
-            UsersDTO dto = dao.checkLogin(email, md5Password);
+            if (name.trim().length() < 6 || name.trim().length() > 30) {
+                error = true;
+                errors.setNameLengthErr("Name required 6 - 30 characters.");
+            }
+            if (!email.matches("^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$")) {
+                error = true;
+                errors.setEmailFormatErr("Email incorrect format (example@example.com).");
+            }
+            if (password.trim().length() < 6 || password.trim().length() > 30) {
+                error = true;
+                errors.setPasswordLengthErr("Password required 6 - 30 characters.");
+            } else if (!retypePassword.trim().equals(password.trim())) {
+                error = true;
+                errors.setConfirmNotMatch("Password and Retype Password must be matched.");
+            }
 
-            if (dto != null) {
-                if (dto.getRole() == 1) {
+            if (error) {
+                request.setAttribute("SIGNUPERROR", errors);
+            } else {
+                UsersDAO dao = new UsersDAO();
+                String md5Password = CheckMD5.getMD5(password);
+                boolean result = dao.signUp(name, email, md5Password, 1);
+
+                if (result) {
                     url = loadAdminServlet;
-                    session.setAttribute("USERNAME", dto.getName());
                 }
             }
 
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         } catch (SQLException e) {
-            log("LoginServlet_SQL " + e.getMessage());
+            log("SignUpServlet_SQL " + e.getMessage());
+            errors.setEmailIsExist("Email is exist.");
+
+            request.setAttribute("SIGNUPERROR", errors);
+
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         } catch (ClassNotFoundException e) {
-            log("LoginServlet_CNF " + e.getMessage());
+            log("SignUpServlet_CNF " + e.getMessage());
         } finally {
             out.close();
         }

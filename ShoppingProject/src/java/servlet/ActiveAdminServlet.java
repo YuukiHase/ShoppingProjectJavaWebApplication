@@ -8,24 +8,19 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import users.dao.UsersDAO;
-import users.dto.UsersDTO;
-import utils.CheckMD5;
 
 /**
  *
  * @author tabal
  */
-public class LoginServlet extends HttpServlet {
-
-    private final String invalidPage = "invalid.html";
+public class ActiveAdminServlet extends HttpServlet {
+    private final String activeError = "active-admin-error.html";
     private final String loadAdminServlet = "LoadAdminServlet";
 
     /**
@@ -41,29 +36,22 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession();
         try {
-            String email = request.getParameter("txtEmail");
-            String password = request.getParameter("txtPassword");
-            String url = invalidPage;
-
+            String pk = request.getParameter("pk");
+            
             UsersDAO dao = new UsersDAO();
-            String md5Password = CheckMD5.getMD5(password);
-            UsersDTO dto = dao.checkLogin(email, md5Password);
-
-            if (dto != null) {
-                if (dto.getRole() == 1) {
-                    url = loadAdminServlet;
-                    session.setAttribute("USERNAME", dto.getName());
-                }
+            boolean result = dao.activeAdmin(pk);
+            
+            String url = activeError;
+            if (result) {
+                url = loadAdminServlet;
             }
-
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         } catch (SQLException e) {
-            log("LoginServlet_SQL " + e.getMessage());
+            log("ActiveAdminServlet_SQL " + e.getMessage());
         } catch (ClassNotFoundException e) {
-            log("LoginServlet_CNF " + e.getMessage());
+            log("ActiveAdminServlet_CNF " + e.getMessage());
         } finally {
             out.close();
         }
