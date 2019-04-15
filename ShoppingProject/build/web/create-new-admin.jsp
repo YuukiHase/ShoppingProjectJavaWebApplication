@@ -162,7 +162,7 @@
                 <i class="fa fa-bars menu" aria-hidden="true"></i>
             </div>
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="admin.jsp">Home</a></li>
                 <li><a href="create-new-admin.html">New Admin</a></li>
 
                 <li style="float: right;"><a href="#">Log out</a></li>

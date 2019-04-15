@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import users.dao.UsersDAO;
 import users.dto.UsersDTO;
 
@@ -37,12 +38,12 @@ public class LoadAdminServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-                
+        HttpSession session = request.getSession();
         try {
             UsersDAO dao = new UsersDAO();
             dao.loadListAdmin();
             List<UsersDTO> listAdmin = dao.getListAdmin();
-            request.setAttribute("LISTADMIN", listAdmin);
+            session.setAttribute("LISTADMIN", listAdmin);
             
             RequestDispatcher rd = request.getRequestDispatcher(adminPage);
             rd.forward(request, response);
