@@ -26,7 +26,7 @@ import utils.CheckMD5;
 public class LoginServlet extends HttpServlet {
 
     private final String invalidPage = "invalid.html";
-    private final String loadAdminServlet = "LoadAdminServlet";
+    private final String pagingServlet = "PagingServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 
             if (dto != null) {
                 if (dto.getRole() == 1) {
-                    url = loadAdminServlet;
+                    url = pagingServlet;
                     session.setAttribute("USERNAME", dto.getName());
                 }
             }

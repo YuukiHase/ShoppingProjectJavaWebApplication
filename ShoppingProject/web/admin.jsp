@@ -60,11 +60,11 @@
                 .toggle {
                     display: block;
                 }
-                ul {
+                nav ul {
                     width: 100%;
                     display: none;
                 }
-                ul li {
+                nav ul li {
                     display: block;
                     text-align: center;
                 }
@@ -74,7 +74,7 @@
             }
 
             table {
-                position: absolute;
+                position: relative;
                 border-spacing: 0;
                 width: 70%;
                 margin-top: 10px;
@@ -93,6 +93,18 @@
             }
             table tr:hover td{
                 background-color: bisque;
+            }
+
+            .wrapper-paging ul {
+                text-align: center;
+            }
+            .wrapper-paging ul li {
+                background: #4bc970;
+                color: white;
+            }
+            .wrapper-paging ul li:hover {
+                background: #ccc;
+                color: #4bc970;
             }
         </style>
     </head>
@@ -146,10 +158,38 @@
                                     <input type="hidden" name="pk" value="${dto.email}" />
                                 </form>
                             </td>
-                        </c:forEach>
+                        </tr>
+                    </c:forEach>
+                    <tr>
+                        <td colspan="5">
+                            <c:set var="currButton" value="${CURRENTBUTTON}" />
+                            <c:set var="pages" value="${PAGES}" />
+                            <div class="wrapper-paging">
+                                <ul>
+                                    <c:forEach var="page" items="${pages}" varStatus="counter">
+                                        <li
+                                            <c:if test="${page eq currButton.get(0)}">
+                                                style="background: #ccc"
+                                            </c:if>
+                                            >
+                                            <c:url var="pageLink" value="PagingServlet">
+                                                <c:param name="currentButton" value="${page}"/>
+                                            </c:url>
+                                            <a href="${pageLink}" 
+                                               <c:if test="${page eq currButton.get(0)}">
+                                                   style="pointer-events: none; color: #4bc970;"
+                                               </c:if>
+                                               >${page}</a>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </c:if>
+
     </body>
 
     <script src="http://code.jquery.com/jquery-3.3.1.js"></script>

@@ -28,6 +28,10 @@
         <servlet-name>ActiveAdminServlet</servlet-name>
         <servlet-class>servlet.ActiveAdminServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PagingServlet</servlet-name>
+        <servlet-class>servlet.PagingServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessServlet</servlet-name>
         <url-pattern>/ProcessServlet</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>ActiveAdminServlet</servlet-name>
         <url-pattern>/ActiveAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PagingServlet</servlet-name>
+        <url-pattern>/PagingServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

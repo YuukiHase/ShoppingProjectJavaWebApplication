@@ -117,6 +117,54 @@ public class UsersDAO implements Serializable{
         }
     }
     
+    public int getCountListAdmin() throws SQLException, ClassNotFoundException {
+        try {
+            con = DBUtils.makeConnection();
+            if (con != null) {
+                String sql = "SELECT COUNT(*) FROM Users Where role = 1";
+                ps = con.prepareStatement(sql);
+                
+                rs = ps.executeQuery();
+                
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } finally {
+            closeConnection();
+        }
+        return 0;
+    }
+    
+    public void getListAdminFromTo(int from, int to) throws SQLException, ClassNotFoundException {
+        try {
+            con = DBUtils.makeConnection();
+            if (con != null) {
+                String sql = "Select * From Users Where role = 1 order by id ASC offset ? rows fetch first ? rows only";
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, from);
+                ps.setInt(2, to);
+                
+                rs = ps.executeQuery();
+                
+                while (rs.next()) {
+                    String name = rs.getString(2);
+                    String email = rs.getString(3);
+                    boolean isDeleted = rs.getBoolean(6);
+                    UsersDTO dto = new UsersDTO(name, email, null, -1, isDeleted);
+                    
+                    if (this.listAdmin == null) {
+                        this.listAdmin = new ArrayList<>();
+                    }
+                    
+                    this.listAdmin.add(dto);
+                }
+            }
+        } finally {
+            closeConnection();
+        }
+    }
+    
     public boolean deactiveAdmin(String pk) throws SQLException, ClassNotFoundException {
         try {
             con = DBUtils.makeConnection();
