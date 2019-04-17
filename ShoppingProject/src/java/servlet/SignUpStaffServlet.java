@@ -21,10 +21,10 @@ import utils.CheckMD5;
  *
  * @author tabal
  */
-public class SignUpAdminServlet extends HttpServlet {
-
-    private final String signUpError = "create-new-admin.jsp";
-    private final String loadAdminServlet = "LoadAdminServlet";
+public class SignUpStaffServlet extends HttpServlet {
+    
+    private final String signUpError = "create-new-staff.jsp";
+    private final String loadStaffServlet = "LoadStaffServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -70,10 +70,10 @@ public class SignUpAdminServlet extends HttpServlet {
             } else {
                 UsersDAO dao = new UsersDAO();
                 String md5Password = CheckMD5.getMD5(password);
-                boolean result = dao.signUp(name, email, md5Password, 1);
+                boolean result = dao.signUp(name, email, md5Password, 2);
 
                 if (result) {
-                    url = loadAdminServlet;
+                    url = loadStaffServlet;
                 }
             }
 

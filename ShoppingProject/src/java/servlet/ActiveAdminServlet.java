@@ -20,7 +20,7 @@ import users.dao.UsersDAO;
  * @author tabal
  */
 public class ActiveAdminServlet extends HttpServlet {
-    private final String activeError = "active-admin-error.html";
+    private final String activeError = "active-error.html";
     private final String loadAdminServlet = "LoadAdminServlet";
 
     /**
@@ -40,7 +40,7 @@ public class ActiveAdminServlet extends HttpServlet {
             String pk = request.getParameter("pk");
             
             UsersDAO dao = new UsersDAO();
-            boolean result = dao.activeAdmin(pk);
+            boolean result = dao.activeUser(pk);
             
             String url = activeError;
             if (result) {

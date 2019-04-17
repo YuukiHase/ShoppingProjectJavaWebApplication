@@ -1,16 +1,17 @@
 <%-- 
-    Document   : admin
-    Created on : Mar 18, 2019, 8:46:29 PM
+    Document   : staff
+    Created on : Apr 17, 2019, 1:24:17 PM
     Author     : tabal
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Management Admin Page</title>
+        <title>Management Staff Page</title>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <style>
             * {
@@ -129,19 +130,19 @@
             </div>
             <ul>
                 <li><a href="#">Home</a></li>
-                <li><a href="create-new-admin.jsp">New Admin</a></li>
-                    <c:url var="managemenStaffLink" value="ProcessServlet">
-                        <c:param name="btAction" value="Management Staff"/>
+                    <c:url var="managemenAdminLink" value="ProcessServlet">
+                        <c:param name="btAction" value="Management Admin"/>
                     </c:url>
-                <li><a href="${managemenStaffLink}">Management Staff</a></li>
+                <li><a href="${managemenAdminLink}">Management Admin</a></li>
+                <li><a href="create-new-staff.jsp">New Staff</a></li>
 
                 <li class="log-out"><a href="#">Log out</a></li>
                 <li class="user-name"><a href="#">${USERNAME}</a></li>
             </ul>
         </nav>
 
-        <c:set var="listAdmin" value="${LISTADMIN}" />
-        <c:if test="${not empty listAdmin}">
+        <c:set var="listStaff" value="${LISTSTAFF}" />
+        <c:if test="${not empty listStaff}">
             <table border="1">
                 <thead>
                     <tr>
@@ -153,7 +154,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="dto" items="${listAdmin}" varStatus="counter">
+                    <c:forEach var="dto" items="${listStaff}" varStatus="counter">
                         <tr>
                             <td>${counter.count}</td>
                             <td>${dto.name}</td>
@@ -170,8 +171,8 @@
                             </c:if>
                             <td>
                                 <form action="ProcessServlet" method="POST">
-                                    <input style="float: left;" type="submit" value="Deactive Admin" name="btAction"/>
-                                    <input style="float: right;" type="submit" value="Active Admin" name="btAction"/>
+                                    <input style="float: left;" type="submit" value="Deactive Staff" name="btAction"/>
+                                    <input style="float: right;" type="submit" value="Active Staff" name="btAction"/>
                                     <input type="hidden" name="pk" value="${dto.email}" />
                                 </form>
                             </td>
@@ -179,8 +180,8 @@
                     </c:forEach>
                     <tr>
                         <td colspan="5">
-                            <c:set var="currButton" value="${CURRENTBUTTON}" />
-                            <c:set var="pages" value="${PAGES}" />
+                            <c:set var="currButton" value="${CURRENTSTAFFBUTTON}" />
+                            <c:set var="pages" value="${PAGESSTAFF}" />
                             <div class="wrapper-paging">
                                 <ul>
                                     <c:forEach var="page" items="${pages}" varStatus="counter">
@@ -189,8 +190,8 @@
                                                 style="background: #ccc"
                                             </c:if>
                                             >
-                                            <c:url var="pageLink" value="PagingServlet">
-                                                <c:param name="currentButton" value="${page}"/>
+                                            <c:url var="pageLink" value="PagingStaffServlet">
+                                                <c:param name="currentStaffButton" value="${page}"/>
                                             </c:url>
                                             <a href="${pageLink}" 
                                                <c:if test="${page eq currButton.get(0)}">

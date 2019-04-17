@@ -90,6 +90,12 @@ public class UsersDAO implements Serializable{
         return listAdmin;
     }
     
+    private List<UsersDTO> listStaff;
+
+    public List<UsersDTO> getListStaff() {
+        return listStaff;
+    }
+    
     public void loadListAdmin() throws SQLException, ClassNotFoundException {
         try {
             con = DBUtils.makeConnection();
@@ -136,6 +142,25 @@ public class UsersDAO implements Serializable{
         return 0;
     }
     
+    public int getCountListStaff() throws SQLException, ClassNotFoundException {
+        try {
+            con = DBUtils.makeConnection();
+            if (con != null) {
+                String sql = "SELECT COUNT(*) FROM Users Where role = 2";
+                ps = con.prepareStatement(sql);
+                
+                rs = ps.executeQuery();
+                
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } finally {
+            closeConnection();
+        }
+        return 0;
+    }
+    
     public void getListAdminFromTo(int from, int to) throws SQLException, ClassNotFoundException {
         try {
             con = DBUtils.makeConnection();
@@ -165,7 +190,36 @@ public class UsersDAO implements Serializable{
         }
     }
     
-    public boolean deactiveAdmin(String pk) throws SQLException, ClassNotFoundException {
+    public void getListStaffFromTo(int from, int to) throws SQLException, ClassNotFoundException {
+        try {
+            con = DBUtils.makeConnection();
+            if (con != null) {
+                String sql = "Select * From Users Where role = 2 order by id ASC offset ? rows fetch first ? rows only";
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, from);
+                ps.setInt(2, to);
+                
+                rs = ps.executeQuery();
+                
+                while (rs.next()) {
+                    String name = rs.getString(2);
+                    String email = rs.getString(3);
+                    boolean isDeleted = rs.getBoolean(6);
+                    UsersDTO dto = new UsersDTO(name, email, null, -1, isDeleted);
+                    
+                    if (this.listStaff == null) {
+                        this.listStaff = new ArrayList<>();
+                    }
+                    
+                    this.listStaff.add(dto);
+                }
+            }
+        } finally {
+            closeConnection();
+        }
+    }
+    
+    public boolean deactiveUser(String pk) throws SQLException, ClassNotFoundException {
         try {
             con = DBUtils.makeConnection();
             if (con != null) {
@@ -185,7 +239,7 @@ public class UsersDAO implements Serializable{
         return false;
     }
     
-    public boolean activeAdmin(String pk) throws SQLException, ClassNotFoundException {
+    public boolean activeUser(String pk) throws SQLException, ClassNotFoundException {
         try {
             con = DBUtils.makeConnection();
             if (con != null) {

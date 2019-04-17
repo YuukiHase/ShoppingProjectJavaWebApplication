@@ -26,6 +26,11 @@ public class ProcessServlet extends HttpServlet {
     private final String signUpAdminServlet = "SignUpAdminServlet";
     private final String deactiveAdminServlet = "DeactiveAdminServlet";
     private final String activeAdminServlet = "ActiveAdminServlet";
+    private final String pagingServlet = "PagingServlet";
+    private final String pagingStaffServlet = "PagingStaffServlet";
+    private final String deactiveStaffServlet = "DeactiveStaffServlet";
+    private final String activeStaffServlet = "ActiveStaffServlet";
+    private final String signUpStaffServlet = "SignUpStaffServlet";
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,8 +61,17 @@ public class ProcessServlet extends HttpServlet {
                 url = deactiveAdminServlet;
             } else if (action.equals("Active Admin")) {
                 url = activeAdminServlet;
+            } else if (action.equals("Management Staff")) {
+                url = pagingStaffServlet;
+            } else if (action.equals("Management Admin")) {
+                url = pagingServlet;
+            } else if (action.equals("Deactive Staff")) {
+                url = deactiveStaffServlet;
+            } else if (action.equals("Active Staff")) {
+                url = activeStaffServlet;
+            } else if (action.equals("Sign Up Staff")) {
+                url = signUpStaffServlet;
             }
-            
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         } finally {

@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Sign Up Page</title>
+        <title>Sign Up Admin Page</title>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <style>
 
@@ -40,6 +40,7 @@
                 color: #4bc970;
             }
             .toggle {
+                z-index: 99;
                 width: 100%;
                 padding: 10px 16px;
                 background: #ccc;
@@ -48,6 +49,12 @@
                 color: #fff;
                 font-size: 16px;
                 display: none;
+            }
+            .log-out {
+                float: right;
+            }
+            .user-name {
+                float: right;
             }
             @media (max-width:768px)
             {
@@ -65,6 +72,12 @@
                 .active {
                     display: block;
                 }
+                .log-out {
+                    float: none;
+                }
+                .user-name {
+                    float: none;
+                }
             }
 
             body {
@@ -76,6 +89,7 @@
                 background-size: cover;
             }
             .regis {
+                z-index: -1;
                 border: 1px solid #4bc970;
                 position: absolute;
                 top: 50%;
@@ -163,10 +177,14 @@
             </div>
             <ul>
                 <li><a href="admin.jsp">Home</a></li>
-                <li><a href="create-new-admin.html">New Admin</a></li>
+                <li><a href="create-new-admin.jsp">New Admin</a></li>
+                    <c:url var="managemenStaffLink" value="ProcessServlet">
+                        <c:param name="btAction" value="Management Staff"/>
+                    </c:url>
+                <li><a href="${managemenStaffLink}">Management Staff</a></li>
 
-                <li style="float: right;"><a href="#">Log out</a></li>
-                <li style="float: right;"><a href="#">${USERNAME}</a></li>
+                <li class="log-out"><a href="#">Log out</a></li>
+                <li class="user-name"><a href="#">${USERNAME}</a></li>
             </ul>
         </nav>
 

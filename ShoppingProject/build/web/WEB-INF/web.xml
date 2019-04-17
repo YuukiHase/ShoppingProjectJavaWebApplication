@@ -32,6 +32,26 @@
         <servlet-name>PagingServlet</servlet-name>
         <servlet-class>servlet.PagingServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadStaffServlet</servlet-name>
+        <servlet-class>servlet.LoadStaffServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PagingStaffServlet</servlet-name>
+        <servlet-class>servlet.PagingStaffServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActiveStaffServlet</servlet-name>
+        <servlet-class>servlet.ActiveStaffServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeactiveStaffServlet</servlet-name>
+        <servlet-class>servlet.DeactiveStaffServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SignUpStaffServlet</servlet-name>
+        <servlet-class>servlet.SignUpStaffServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessServlet</servlet-name>
         <url-pattern>/ProcessServlet</url-pattern>
@@ -63,6 +83,26 @@
     <servlet-mapping>
         <servlet-name>PagingServlet</servlet-name>
         <url-pattern>/PagingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadStaffServlet</servlet-name>
+        <url-pattern>/LoadStaffServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PagingStaffServlet</servlet-name>
+        <url-pattern>/PagingStaffServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActiveStaffServlet</servlet-name>
+        <url-pattern>/ActiveStaffServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeactiveStaffServlet</servlet-name>
+        <url-pattern>/DeactiveStaffServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignUpStaffServlet</servlet-name>
+        <url-pattern>/SignUpStaffServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

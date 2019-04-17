@@ -20,7 +20,7 @@ import users.dao.UsersDAO;
  * @author tabal
  */
 public class DeactiveAdminServlet extends HttpServlet {
-    private final String deactiveError = "delete-admin-error.html";
+    private final String deactiveError = "delete-error.html";
     private final String loadAdminServlet = "LoadAdminServlet";
     
     /**
@@ -40,7 +40,7 @@ public class DeactiveAdminServlet extends HttpServlet {
             String pk = request.getParameter("pk");
             
             UsersDAO dao = new UsersDAO();
-            boolean result = dao.deactiveAdmin(pk);
+            boolean result = dao.deactiveUser(pk);
             
             String url = deactiveError;
             if (result) {

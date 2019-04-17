@@ -5,7 +5,6 @@
  */
 package servlet;
 
-import errors.RegistrationErrors;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -15,16 +14,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import users.dao.UsersDAO;
-import utils.CheckMD5;
 
 /**
  *
  * @author tabal
  */
-public class SignUpAdminServlet extends HttpServlet {
-
-    private final String signUpError = "create-new-admin.jsp";
-    private final String loadAdminServlet = "LoadAdminServlet";
+public class ActiveStaffServlet extends HttpServlet {
+    private final String activeError = "active-admin-error.html";
+    private final String loadStaffServlet = "LoadStaffServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,56 +36,22 @@ public class SignUpAdminServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        RegistrationErrors errors = new RegistrationErrors();
-        String name = request.getParameter("txtUserName");
-        String email = request.getParameter("txtEmail");
-        String password = request.getParameter("txtPassword");
-        String retypePassword = request.getParameter("txtRetypePassword");
-
-        String url = signUpError;
         try {
-            boolean error = false;
-
-            if (name.trim().length() < 6 || name.trim().length() > 30) {
-                error = true;
-                errors.setNameLengthErr("Name required 6 - 30 characters.");
+            String pk = request.getParameter("pk");
+            
+            UsersDAO dao = new UsersDAO();
+            boolean result = dao.activeUser(pk);
+            
+            String url = activeError;
+            if (result) {
+                url = loadStaffServlet;
             }
-            if (!email.matches("^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$")) {
-                error = true;
-                errors.setEmailFormatErr("Email incorrect format (example@example.com).");
-            }
-            if (password.trim().length() < 6 || password.trim().length() > 30) {
-                error = true;
-                errors.setPasswordLengthErr("Password required 6 - 30 characters.");
-            } else if (!retypePassword.trim().equals(password.trim())) {
-                error = true;
-                errors.setConfirmNotMatch("Password and Retype Password must be matched.");
-            }
-
-            if (error) {
-                request.setAttribute("SIGNUPERROR", errors);
-            } else {
-                UsersDAO dao = new UsersDAO();
-                String md5Password = CheckMD5.getMD5(password);
-                boolean result = dao.signUp(name, email, md5Password, 1);
-
-                if (result) {
-                    url = loadAdminServlet;
-                }
-            }
-
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         } catch (SQLException e) {
-            log("SignUpServlet_SQL " + e.getMessage());
-            errors.setEmailIsExist("Email is exist.");
-
-            request.setAttribute("SIGNUPERROR", errors);
-
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            log("ActiveAdminServlet_SQL " + e.getMessage());
         } catch (ClassNotFoundException e) {
-            log("SignUpServlet_CNF " + e.getMessage());
+            log("ActiveAdminServlet_CNF " + e.getMessage());
         } finally {
             out.close();
         }

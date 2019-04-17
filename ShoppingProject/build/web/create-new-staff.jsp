@@ -1,6 +1,6 @@
 <%-- 
-    Document   : create-new-admin
-    Created on : Mar 25, 2019, 10:09:39 PM
+    Document   : create-new-staff
+    Created on : Apr 17, 2019, 1:37:16 PM
     Author     : tabal
 --%>
 
@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Sign Up Admin Page</title>
+        <title>Sign Up Staff Page</title>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <style>
 
@@ -177,11 +177,11 @@
             </div>
             <ul>
                 <li><a href="admin.jsp">Home</a></li>
-                <li><a href="create-new-admin.jsp">New Admin</a></li>
-                    <c:url var="managemenStaffLink" value="ProcessServlet">
-                        <c:param name="btAction" value="Management Staff"/>
+                    <c:url var="managemenAdminLink" value="ProcessServlet">
+                        <c:param name="btAction" value="Management Admin"/>
                     </c:url>
-                <li><a href="${managemenStaffLink}">Management Staff</a></li>
+                <li><a href="${managemenAdminLink}">Management Admin</a></li>
+                <li><a href="create-new-staff.jsp">New Staff</a></li>
 
                 <li class="log-out"><a href="#">Log out</a></li>
                 <li class="user-name"><a href="#">${USERNAME}</a></li>
@@ -225,7 +225,7 @@
                     ${errors.confirmNotMatch}
                     </font> <br/>
                 </c:if>
-                <input type="submit" name="btAction" value="Sign Up Admin">
+                <input type="submit" name="btAction" value="Sign Up Staff">
             </div>
         </form>
     </body>
