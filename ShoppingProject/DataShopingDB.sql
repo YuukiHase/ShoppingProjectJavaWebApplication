@@ -19,7 +19,9 @@ Create table Role
 	id int primary key identity not null,
 	name varchar(50) not null
 )
-Select * From Users Where role = 1
+Select * From Users Where role = 2
 Select * From Users Where role = 1 order by id ASC offset 10 rows fetch first 5 rows only
 SELECT COUNT(*) FROM Users Where role = 1
 delete from Users where email = 'loanconuong7@gmail.com'
+
+Select * From Role
